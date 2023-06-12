@@ -19,7 +19,7 @@ const passwordTwo = ref("");
 
 const registerViaEmail = async () => {
   if (passwordOne.value !== passwordTwo.value) {
-    alert("Brozzzzz..... Yer Paswerdz not coolz!");
+    alert("count to 5");
     return;
   }
 
@@ -50,6 +50,7 @@ const registerViaGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const { user } = await signInWithPopup(auth, provider);
   store.user = user;
+  console.log(store.user)
   const { cart } = (await getDoc(doc(firestore, "carts", user.email))).data();
   store.cart = cart;
   router.push("/purchase");

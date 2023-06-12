@@ -1,13 +1,15 @@
 <script setup>
-import { router } from "../router"
+import { router } from "../router";
 </script>
 
 <template>
-    <button @click="router.push('./login')">Click</button>
+  <Header :info="{ site: 'Andy Movies', path: '/login', button: 'Login' }" />
+  <Hero />
+  <Footer />
 </template>
 
 <style scoped>
-button {
-    padding: 100px 100px;
+div {
+  background-color: #282a36;
 }
 </style>
