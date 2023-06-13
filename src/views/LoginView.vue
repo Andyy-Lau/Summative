@@ -9,7 +9,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { getDoc, doc } from "@firebase/firestore";
+import { getDoc, doc, collection, setDoc } from "@firebase/firestore";
 
 const store = useStore();
 const router = useRouter();
@@ -34,6 +34,21 @@ const registerViaEmail = async () => {
   router.push("/purchase");
 };
 
+const registerViaGoogle = async () => {
+  const cartsRef = collection(firestore, "carts");
+  const provider = new GoogleAuthProvider();
+  const { user } = await signInWithPopup(auth, provider);
+  store.user = user;
+  console.log(user.email);
+  await setDoc(doc(cartsRef, user.email), {
+    cart: [],
+  });
+  const cart = (await getDoc(doc(firestore, "carts", user.email))).data().cart;
+  store.cart = cart;
+  console.log(store.cart);
+  router.push("/purchase");
+};
+
 const loginViaEmail = async () => {
   try {
     const { user } = await signInWithEmailAndPassword(
@@ -48,13 +63,13 @@ const loginViaEmail = async () => {
   }
 };
 
-const registerViaGoogle = async () => {
+const loginViaGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const { user } = await signInWithPopup(auth, provider);
+  const usersRef = doc(firestore, "carts", user.email);
   store.user = user;
-  console.log(store.user);
   const cart = (await getDoc(doc(firestore, "carts", user.email))).data();
-  store.cart = cart;
+  store.cart = cart.cart;
   router.push("/purchase");
 };
 </script>
@@ -85,6 +100,14 @@ const registerViaGoogle = async () => {
           />
           <input type="submit" value="Register" />
         </form>
+        <button @click="registerViaGoogle()">
+          <div id="google-button">
+            <img
+              src="https://developers.google.com/static/identity/images/g-logo.png"
+            />
+            Register with Google
+          </div>
+        </button>
       </div>
       <div v-on:click="loginHidden = !loginHidden" class="child-2">
         <h1>Login</h1>
@@ -100,7 +123,7 @@ const registerViaGoogle = async () => {
           <input v-model="passwordOne" type="password" placeholder="Password" />
           <input type="submit" value="Login" />
         </form>
-        <button @click="registerViaGoogle()">
+        <button @click="loginViaGoogle()">
           <div id="google-button">
             <img
               src="https://developers.google.com/static/identity/images/g-logo.png"
@@ -125,6 +148,7 @@ body {
   margin: 0;
   min-height: 100vh;
   justify-content: space-between;
+  background-color: white;
 }
 footer {
   padding-top: 3rem;
@@ -161,6 +185,7 @@ footer img {
 .login-container {
   width: 100%;
   flex-direction: column;
+  min-height: 40vh;
 }
 .main-container > * > * {
   margin: 1rem;
@@ -168,12 +193,6 @@ footer img {
 .main-container > * > *:first-child {
   margin-left: 3rem;
   font-size: 36px;
-}
-.register-container {
-  min-height: 20vh;
-}
-.login-container {
-  min-height: 40vh;
 }
 .login-container button {
   margin-bottom: 2rem;

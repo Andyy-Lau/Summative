@@ -1,9 +1,8 @@
 <script setup>
 import { router } from "../router";
-import Header from "../components/Header.vue"
-import Hero from "../components/Hero.vue"
-import Footer from "../components/Footer.vue"
-
+import Header from "../components/Header.vue";
+import Hero from "../components/Hero.vue";
+import Footer from "../components/Footer.vue";
 </script>
 
 <template>

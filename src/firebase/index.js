@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: "summative-d5974",
   storageBucket: "summative-d5974.appspot.com",
   messagingSenderId: "1019483152388",
-  appId: "1:1019483152388:web:c6c99592cd3b26245a1551"
+  appId: "1:1019483152388:web:c6c99592cd3b26245a1551",
 };
 
 const app = initializeApp(firebaseConfig);

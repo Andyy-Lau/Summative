@@ -1,5 +1,5 @@
 <script setup>
-import axios from "axios"
+import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import Modal from "../components/Modal.vue";
@@ -35,12 +35,10 @@ const getTMDBData = async (url, options, page) => {
   totalPages.value = movies.value.total_pages;
   currentURL.value = url;
 };
-
-
 </script>
 
 <template>
-<div>
+  <div>
     <div class="controls">
       <div>
         <input

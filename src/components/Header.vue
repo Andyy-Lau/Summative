@@ -43,5 +43,6 @@ button {
   font-size: 20px;
   border-radius: 8px;
   border: none;
+  margin-bottom: 0;
 }
 </style>

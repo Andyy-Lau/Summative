@@ -1,13 +1,13 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: #6272a4;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #6272a4;
 }
 
 button:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
 button:active {
-    background-color: rgb(151, 158, 163);
-}  
+  background-color: rgb(151, 158, 163);
+}

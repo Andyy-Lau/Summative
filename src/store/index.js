@@ -8,17 +8,9 @@ export const useStore = defineStore("store", {
     cart: [],
   }),
   actions: {
-    // async addToCart(poster, title) {
-    //   this.cart.push({
-    //     poster,
-    //     title,
-    //   });
-
-    //   await setDoc(doc(firestore, "carts", this.user.email), { cart: this.cart });
-    // }
-    async addToCart(posterPath, movieTitle, movieRelease, movieOverview) {
+    addToCart(posterPath, movieTitle, movieRelease, movieOverview) {
       this.counter = 1;
-      console.log(this.cart)
+      console.log(this.cart);
       if (this.cart.length == 0) {
         this.cart.push({
           poster: posterPath,
@@ -43,6 +35,9 @@ export const useStore = defineStore("store", {
         });
       }
       console.log(this.cart);
+      this.addToFirestore();
+    },
+    async addToFirestore() {
       await setDoc(doc(firestore, "carts", this.user.email), {
         cart: this.cart,
       });
