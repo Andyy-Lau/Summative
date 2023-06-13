@@ -1,7 +1,74 @@
-<script setup></script>
+<script setup>
+import { useStore } from "../store/index.js";
+import { ref } from "vue";
+
+const movies = ref(false);
+const store = useStore();
+
+movies.value = store.cart;
+console.log(store.cart);
+</script>
 
 <template>
-
+  <body>
+    <div v-if="movies" class="cart-content">
+      <div v-for="movie in movies" class="movie-container">
+        <img :src="`https://image.tmdb.org/t/p/w500${movie.poster}`" />
+        <div class="text-container">
+          <div>
+            <h1>{{ movie.title }}</h1>
+            <h2>{{ movie.release }}</h2>
+            <h4>{{ movie.overview }}</h4>
+          </div>
+          <h3>{{ movie.quantity }} currently in cart</h3>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <h2>You have nothing in your cart.</h2>
+    </div>
+  </body>
 </template>
 
-<style scoped></style>
+<style>
+body {
+  min-height: 100vh;
+  background-color: #282a36;
+  width: 100vw;
+}
+.cart-content {
+  display: flex;
+  flex-direction: column;
+}
+.movie-container {
+  display: flex;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 180px;
+}
+h1 {
+  display: block;
+}
+img {
+  aspect-ratio: auto;
+  height: 180px;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+}
+h3 {
+  align-self: flex-end;
+}
+button {
+  padding: 6px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 3rem;
+  justify-self: center;
+}
+</style>

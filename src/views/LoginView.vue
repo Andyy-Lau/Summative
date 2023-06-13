@@ -53,7 +53,7 @@ const registerViaGoogle = async () => {
   const { user } = await signInWithPopup(auth, provider);
   store.user = user;
   console.log(store.user);
-  const cart  = (await getDoc(doc(firestore, "carts", user.email))).data();
+  const cart = (await getDoc(doc(firestore, "carts", user.email))).data();
   store.cart = cart;
   router.push("/purchase");
 };
@@ -110,7 +110,11 @@ const registerViaGoogle = async () => {
         </button>
       </div>
     </div>
-    <img src="https://media.tenor.com/IVQgkTbHZhYAAAAd/spinning-monkey-spinning-ape.gif" />
+    <footer>
+      <img
+        src="https://media.tenor.com/IVQgkTbHZhYAAAAd/spinning-monkey-spinning-ape.gif"
+      />
+    </footer>
   </body>
 </template>
 
@@ -118,10 +122,17 @@ const registerViaGoogle = async () => {
 body {
   display: flex;
   flex-direction: column;
+  margin: 0;
+  min-height: 100vh;
+  justify-content: space-between;
 }
-img {
+footer {
+  padding-top: 3rem;
+  width: 100vw;
+}
+footer img {
   height: 200px;
-  margin-top: 1rem;
+  width: 100%;
 }
 .main-container {
   display: flex;
@@ -141,13 +152,13 @@ img {
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-
 }
 #drop-down {
   aspect-ratio: 1/1;
   max-height: 5vh;
 }
-.register-container, .login-container {
+.register-container,
+.login-container {
   width: 100%;
   flex-direction: column;
 }

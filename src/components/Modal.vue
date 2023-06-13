@@ -1,6 +1,6 @@
 <script setup>
 import axios from "axios";
-import { useStore } from "../pinia/index.js";
+import { useStore } from "../store";
 
 const store = useStore();
 const props = defineProps(["id"]);
