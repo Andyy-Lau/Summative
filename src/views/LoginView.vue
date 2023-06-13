@@ -53,7 +53,7 @@ const registerViaGoogle = async () => {
   const { user } = await signInWithPopup(auth, provider);
   store.user = user;
   console.log(store.user);
-  const { cart } = (await getDoc(doc(firestore, "carts", user.email))).data();
+  const cart  = (await getDoc(doc(firestore, "carts", user.email))).data();
   store.cart = cart;
   router.push("/purchase");
 };
@@ -124,19 +124,32 @@ img {
   margin-top: 1rem;
 }
 .main-container {
-  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  width: 100%;
 }
 .main-container > * {
   height: 20vh;
-  border: solid black 1px;
+  width: 40vw;
+  border-bottom: solid black 1px;
+  /* border: solid black 1px; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+
 }
 #drop-down {
   aspect-ratio: 1/1;
   max-height: 5vh;
+}
+.register-container, .login-container {
+  width: 100%;
+  flex-direction: column;
 }
 .main-container > * > * {
   margin: 1rem;
@@ -147,13 +160,9 @@ img {
 }
 .register-container {
   min-height: 20vh;
-  border: solid black 1px;
-  flex-direction: column;
 }
 .login-container {
   min-height: 40vh;
-  border: solid black 1px;
-  flex-direction: column;
 }
 .login-container button {
   margin-bottom: 2rem;
@@ -170,6 +179,7 @@ form > * {
 }
 #google-button img {
   height: 2rem;
+  margin: 0;
 }
 /* .auth-container {
   display: flex;
