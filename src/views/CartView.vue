@@ -1,7 +1,7 @@
 <script setup>
 import { useStore } from "../store/index.js";
 import { ref } from "vue";
-import Header from "../components/Header.vue"
+import Header from "../components/Header.vue";
 
 const movies = ref(false);
 const store = useStore();
@@ -22,11 +22,22 @@ console.log(store.cart);
             <h2>{{ movie.release }}</h2>
             <h4>{{ movie.overview }}</h4>
           </div>
-          <div class="cart-quantity">
-          <button @click="store.updateFromCart(movie.title, movie.quantity, true)">+</button>
-          <h3>{{ movie.quantity }} currently in cart</h3>
-          <button @click="store.updateFromCart(movie.title, movie.quantity, false)">-</button>
-        </div>
+          <div class="movie-bottom-container">
+            <div class="cart-quantity">
+              <button
+                @click="store.updateCart(movie.title, movie.quantity, false)"
+              >
+                -
+              </button>
+              <h3>{{ movie.quantity }} currently in cart</h3>
+              <button
+                @click="store.updateCart(movie.title, movie.quantity, true)"
+              >
+                +
+              </button>
+            </div>
+            <button @click="store.removeFromCart(movie.title)" id="remove">Remove</button>
+          </div>
         </div>
       </div>
     </div>
@@ -36,7 +47,7 @@ console.log(store.cart);
   </body>
 </template>
 
-<style>
+<style scoped>
 body {
   min-height: 100vh;
   background-color: #282a36;
@@ -50,6 +61,7 @@ body {
   display: flex;
   margin-left: 1rem;
   margin-right: 1rem;
+  margin-bottom: 2rem;
 }
 .text-container {
   display: flex;
@@ -57,11 +69,14 @@ body {
   justify-content: space-between;
   height: 180px;
 }
+.movie-bottom-container {
+  display: flex;
+  justify-content: space-between;
+}
 .cart-quantity {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: end;
   gap: 1rem;
   text-align: center;
 }
@@ -69,23 +84,28 @@ body {
   margin-top: auto;
   margin-bottom: auto;
 }
+#remove {
+  font-size: 16px;
+  padding: 8px 12px;
+}
 h1 {
   display: block;
 }
 img {
   aspect-ratio: auto;
   height: 180px;
-  margin-bottom: 2rem;
   margin-right: 1rem;
 }
 h3 {
   align-self: flex-end;
 }
 button {
-  padding: 6px 24px;
+  display: flex;
+  padding: 0px 16px;
+  height: 21.6px;
   border-radius: 8px;
   border: none;
-  font-size: 16px;
-  justify-self: center;
+  font-size: 24px;
+  align-items: center;
 }
 </style>

@@ -39,8 +39,8 @@ const getTMDBData = async (url, options, page) => {
 </script>
 
 <template>
-  <Header :info="{ site: 'Movies', path: '/cart', button: 'Cart' }" />
   <body>
+    <Header :info="{ site: 'Movies', path: '/cart', button: 'Cart' }" />
     <div class="controls">
       <div class="search-container">
         <input
@@ -132,23 +132,15 @@ const getTMDBData = async (url, options, page) => {
 body {
   min-height: 100vh;
   background-color: #282a36;
-  /* width: 100vw; */
-  overflow: hidden;
+  width: 100vw;
 }
 .content-container {
   display: flex;
   flex-wrap: wrap;
   gap: 6.25vw;
 }
-.movie-container {
-  margin: 0;
-  aspect-ratio: 2/3;
-  width: 15vw;
-}
 .movie-container img {
-  width: 100%;
-  height: 100%;
-  margin: 0;
+  width: 15vw;
 }
 .pagination {
   display: flex;
@@ -164,5 +156,12 @@ body {
 .select-container, .search-container {
   display: flex;
   gap: 1rem;
+}
+button {
+  padding: 6px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  justify-self: center;
 }
 </style>

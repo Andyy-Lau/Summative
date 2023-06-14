@@ -37,26 +37,38 @@ export const useStore = defineStore("store", {
       console.log(this.cart);
       this.addToFirestore();
     },
+    updateCart(movieTitle, quantity, add) {
+      if (add) {
+        for (var i = 0; i < this.cart.length; i++) {
+          if (movieTitle == this.cart[i].title) {
+            this.cart[i].quantity = ++quantity;
+          }
+        }
+      } else {
+        for (var i = 0; i < this.cart.length; i++) {
+          if (movieTitle == this.cart[i].title) {
+            if (quantity == 1) {
+              this.cart.splice(i, 1);
+            } else {
+              this.cart[i].quantity = --quantity;
+            }
+          }
+        }
+      }
+      this.addToFirestore();
+    },
+    removeFromCart(movieTitle) {
+      for (var i = 0; i < this.cart.length; i++) {
+        if (movieTitle == this.cart[i].title) {
+          this.cart.splice(i, 1);
+        }
+      }
+      this.addToFirestore();
+    },
     async addToFirestore() {
       await setDoc(doc(firestore, "carts", this.user.email), {
         cart: this.cart,
       });
-    },
-    updateFromCart(movieTitle, quantity, add) {
-      if (add) {
-      for (var i = 0; i < this.cart.length; i++) {
-        if (movieTitle == this.cart[i].title) {
-          this.cart[i].quantity = ++quantity
-        }
-      }
-    } else {
-      for (var i = 0; i < this.cart.length; i++) {
-        if (movieTitle == this.cart[i].title) {
-          this.cart[i].quantity = --quantity
-        }
-      }
-    }
-      this.addToFirestore();
     },
   },
 });

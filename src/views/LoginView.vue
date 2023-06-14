@@ -60,17 +60,21 @@ const loginViaEmail = async () => {
     router.push("/purchase");
   } catch (error) {
     console.log(error);
+    alert("Please register first!")
   }
 };
 
 const loginViaGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const { user } = await signInWithPopup(auth, provider);
-  const usersRef = doc(firestore, "carts", user.email);
-  store.user = user;
-  const cart = (await getDoc(doc(firestore, "carts", user.email))).data();
-  store.cart = cart.cart;
-  router.push("/purchase");
+  const userRef = await getDoc(doc(firestore, "carts", user.email));
+  if (userRef.exists()) {
+    store.user = user;
+    store.cart = userRef.data().cart;
+    router.push("/purchase");
+  } else {
+    alert("You have not registered with google yet! Please select the register option first.")
+  }
 };
 </script>
 
