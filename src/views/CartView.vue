@@ -1,6 +1,7 @@
 <script setup>
 import { useStore } from "../store/index.js";
 import { ref } from "vue";
+import Header from "../components/Header.vue"
 
 const movies = ref(false);
 const store = useStore();
@@ -11,6 +12,7 @@ console.log(store.cart);
 
 <template>
   <body>
+    <Header :info="{ site: 'Cart', path: '/purchase', button: 'Back' }" />
     <div v-if="movies" class="cart-content">
       <div v-for="movie in movies" class="movie-container">
         <img :src="`https://image.tmdb.org/t/p/w500${movie.poster}`" />
@@ -20,7 +22,11 @@ console.log(store.cart);
             <h2>{{ movie.release }}</h2>
             <h4>{{ movie.overview }}</h4>
           </div>
+          <div class="cart-quantity">
+          <button @click="store.updateFromCart(movie.title, movie.quantity, true)">+</button>
           <h3>{{ movie.quantity }} currently in cart</h3>
+          <button @click="store.updateFromCart(movie.title, movie.quantity, false)">-</button>
+        </div>
         </div>
       </div>
     </div>
@@ -51,6 +57,18 @@ body {
   justify-content: space-between;
   height: 180px;
 }
+.cart-quantity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+  text-align: center;
+}
+.cart-quantity h3 {
+  margin-top: auto;
+  margin-bottom: auto;
+}
 h1 {
   display: block;
 }
@@ -68,7 +86,6 @@ button {
   border-radius: 8px;
   border: none;
   font-size: 16px;
-  margin-bottom: 3rem;
   justify-self: center;
 }
 </style>

@@ -4,7 +4,6 @@
   box-sizing: border-box;
   color: #6272a4;
 }
-
 button:hover {
   cursor: pointer;
 }

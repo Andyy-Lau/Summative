@@ -42,5 +42,21 @@ export const useStore = defineStore("store", {
         cart: this.cart,
       });
     },
+    updateFromCart(movieTitle, quantity, add) {
+      if (add) {
+      for (var i = 0; i < this.cart.length; i++) {
+        if (movieTitle == this.cart[i].title) {
+          this.cart[i].quantity = ++quantity
+        }
+      }
+    } else {
+      for (var i = 0; i < this.cart.length; i++) {
+        if (movieTitle == this.cart[i].title) {
+          this.cart[i].quantity = --quantity
+        }
+      }
+    }
+      this.addToFirestore();
+    },
   },
 });

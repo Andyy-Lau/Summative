@@ -3,6 +3,7 @@ import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import Modal from "../components/Modal.vue";
+import Header from "../components/Header.vue";
 
 const router = useRouter();
 const genre = ref(28);
@@ -38,9 +39,10 @@ const getTMDBData = async (url, options, page) => {
 </script>
 
 <template>
-  <div>
+  <Header :info="{ site: 'Movies', path: '/cart', button: 'Cart' }" />
+  <body>
     <div class="controls">
-      <div>
+      <div class="search-container">
         <input
           type="search"
           placeholder="Enter search items"
@@ -56,7 +58,7 @@ const getTMDBData = async (url, options, page) => {
           Search
         </button>
       </div>
-      <div>
+      <div class="select-container">
         <select v-model="genre">
           <option value="28">Action</option>
           <option value="10751">Family</option>
@@ -79,15 +81,10 @@ const getTMDBData = async (url, options, page) => {
           <option value="10749">Romance</option>
         </select>
         <button
-          @click="
-            getTMDBData('https://api.themoviedb.org/3/discover/movie', {
-              with_genres: genre,
-            })
-          "
-        >
+          @click="getTMDBData('https://api.themoviedb.org/3/discover/movie', {with_genres: genre,})"
+          >
           Get
-        </button>
-        <button @click="router.push('/cart')">Cart</button>
+          </button>
       </div>
     </div>
     <div class="pagination">
@@ -119,36 +116,53 @@ const getTMDBData = async (url, options, page) => {
         Next
       </button>
     </div>
-    <div v-if="movies" class="tiles">
-      <div v-for="movie in movies.results" :key="movie.id" class="tile">
+    <div v-if="movies" class="content-container">
+      <div v-for="movie in movies.results" :key="movie.id" class="movie-container">
         <img
           :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
           @click="toggleModal(movie.id)"
         />
       </div>
     </div>
-  </div>
+  </body>
   <Modal v-if="showModal" :id="selectedRecordId" @toggleModal="toggleModal()" />
 </template>
 
 <style scoped>
-.tiles {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+body {
+  min-height: 100vh;
+  background-color: #282a36;
+  /* width: 100vw; */
+  overflow: hidden;
 }
-
-img {
-  width: 200px;
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6.25vw;
 }
-
+.movie-container {
+  margin: 0;
+  aspect-ratio: 2/3;
+  width: 15vw;
+}
+.movie-container img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
 .pagination {
   display: flex;
   gap: 1rem;
+  margin: 1rem;
 }
-
 .controls {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
+  margin: 1rem;
+}
+.select-container, .search-container {
+  display: flex;
+  gap: 1rem;
 }
 </style>

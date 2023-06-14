@@ -35,12 +35,12 @@ const registerViaEmail = async () => {
 };
 
 const registerViaGoogle = async () => {
-  const cartsRef = collection(firestore, "carts");
+  const usersRef = collection(firestore, "carts");
   const provider = new GoogleAuthProvider();
   const { user } = await signInWithPopup(auth, provider);
   store.user = user;
   console.log(user.email);
-  await setDoc(doc(cartsRef, user.email), {
+  await setDoc(doc(usersRef, user.email), {
     cart: [],
   });
   const cart = (await getDoc(doc(firestore, "carts", user.email))).data().cart;

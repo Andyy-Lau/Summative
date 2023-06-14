@@ -72,6 +72,7 @@ console.log(movie);
   grid-template-rows: repeat(10, 1fr);
   text-align: center;
   width: 80%;
+  height: 100%;
 }
 h1 {
   grid-row-start: 1;
@@ -97,11 +98,18 @@ button {
   width: 1.5rem;
   height: 1.5rem;
   text-align: center;
+  padding: 0;
+  border-radius: 2px;
+  border-width: 2px;
 }
 h3:hover {
   cursor: pointer;
 }
 h3:active {
   background-color: rgb(151, 158, 163);
+}
+img {
+  margin: 0;
+  height: 100%;
 }
 </style>
